@@ -40,22 +40,24 @@ function clean_and_ret {
 		echo "**                Build package failed, cleaning environment                **"
 		echo "**                                                                          **"
 		echo "******************************************************************************"
+		
+		cd $SGXSSL_ROOT/sgx/
+		make clean
+
+		cd $SGXSSL_ROOT/sgx/libsgx_tsgxssl
+		rm -f tsgxssl_version.cpp
+
+		cd $SGXSSL_ROOT/sgx/libsgx_usgxssl
+		rm -f usgxssl_version.cpp
+
+		cd $SGXSSL_ROOT/package
+		rm -rf include/openssl/*
+		rm -rf lib64/release/*
+		rm -rf lib64/debug/*
+
+		cd $SGXSSL_ROOT
 	fi
-	cd $SGXSSL_ROOT/sgx/
-	make clean
-
-	cd $SGXSSL_ROOT/sgx/libsgx_tsgxssl
-	rm -f tsgxssl_version.cpp
-
-	cd $SGXSSL_ROOT/sgx/libsgx_usgxssl
-	rm -f usgxssl_version.cpp
-
-	cd $SGXSSL_ROOT/package
-	rm -rf include/openssl/*
-	rm -rf lib64/release/*
-	rm -rf lib64/debug/*
-
-	cd $SGXSSL_ROOT
+	
 
 	exit $ret_status
 
